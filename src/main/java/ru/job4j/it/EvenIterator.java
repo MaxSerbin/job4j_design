@@ -1,29 +1,22 @@
 package ru.job4j.it;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class EvenIterator implements Iterator<Integer> {
     private final int[] data;
-    private int point = 0;
+    private int point;
 
 
     public EvenIterator(int[] data) {
-        int[] tmp = new int[data.length];
-        int counter = 0;
-        for (int num : data) {
-            if(num % 2 == 0){
-                tmp[counter++] = num;
-            }
-        }
-          this.data = Arrays.copyOf(tmp, counter);
-
+          this.data = data;
+          point = -1;
+          fixNext();
     }
 
     @Override
     public boolean hasNext() {
-        return point < data.length;
+            return point < data.length;
     }
 
     @Override
@@ -31,6 +24,17 @@ public class EvenIterator implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        return data[point++];
+        Integer x = data[point];
+        fixNext();
+        return  x;
     }
+
+    private void fixNext() {
+        point += 1;
+        while (hasNext() && data[point] % 2 != 0) {
+            point += 1;
+        }
+    }
+
+
 }
