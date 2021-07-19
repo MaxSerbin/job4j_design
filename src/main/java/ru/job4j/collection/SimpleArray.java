@@ -4,16 +4,12 @@ import java.util.*;
 
 
 public class SimpleArray<T> implements Iterable<T> {
-    Object[] container;
+    private Object[] container;
     private int count = 0;
     private int modCount = 0;
 
-    public SimpleArray( Object[] container) {
-        this.container = container;
-    }
-
-    public T[] getArray() {
-        return (T[]) container;
+    public SimpleArray(int count) {
+        this.container = new Object[count];
     }
 
     public T get(int index) {
@@ -42,7 +38,7 @@ public class SimpleArray<T> implements Iterable<T> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return countIt < container.length;
+                return countIt < count;
             }
 
             @Override
