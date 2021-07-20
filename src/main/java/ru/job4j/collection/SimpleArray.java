@@ -19,11 +19,10 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public void add(T model) {
         if(count >= container.length) {
-            container = Arrays.copyOf(container, container.length + 1);
+            container = Arrays.copyOf(container, container.length + 10);
+        }
             container[count++] = model;
             modCount++;
-        }
-
     }
 
     @Override

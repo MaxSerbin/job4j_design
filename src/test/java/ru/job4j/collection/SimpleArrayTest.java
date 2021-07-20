@@ -58,7 +58,7 @@ public class SimpleArrayTest {
 
     @Test
     public void whenAdd3() {
-        SimpleArray<String> array = new SimpleArray<>(0);
+        SimpleArray<String> array = new SimpleArray<>(2);
         array.add("first");
         array.add("second");
         array.add("third");
