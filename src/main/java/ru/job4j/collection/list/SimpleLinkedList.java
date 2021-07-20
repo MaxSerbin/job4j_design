@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Iterator;
 import java.util.Objects;
 
+
 public class SimpleLinkedList<E> implements List<E> {
     private transient int size = 0;
     private transient int modCount = 0;
