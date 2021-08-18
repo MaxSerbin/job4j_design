@@ -23,7 +23,10 @@ public class User {
                 '}';
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
+    }
 
     public static void main(String[] args) {
         User user1 = new User("Alex", 3, new GregorianCalendar(1975, Calendar.APRIL, 5));
@@ -36,5 +39,4 @@ public class User {
             System.out.println(Objects.hashCode(i));
         }
     }
-
 }
