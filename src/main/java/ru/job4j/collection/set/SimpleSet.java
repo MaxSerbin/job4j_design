@@ -22,7 +22,7 @@ public class SimpleSet<T> implements Set<T> {
     @Override
     public boolean contains(T value) {
         for (var i : set) {
-            if (Objects.equals(value,i)) {
+            if (Objects.equals(value, i)) {
                 return true;
             }
         }
