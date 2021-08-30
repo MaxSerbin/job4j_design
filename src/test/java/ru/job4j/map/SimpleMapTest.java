@@ -40,7 +40,8 @@ public class SimpleMapTest {
     public void whenPutDuplicate() {
         SimpleMap<Integer, String> map = new SimpleMap<>();
         assertTrue(map.put(1, "AAA"));
-        assertFalse(map.put(1, "BBB"));
+        assertTrue(map.put(1, "BBB"));
+        assertThat(map.get(1), is("BBB"));
     }
 
     @Test
