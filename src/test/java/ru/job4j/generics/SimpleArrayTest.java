@@ -52,7 +52,7 @@ public class SimpleArrayTest {
         assertThat(integers.getArray(), is(expect));
     }
 
-    @Test//(expected = NoSuchElementException.class)
+    @Test
     public void hasNext() {
         SimpleArray<Integer> integers = new SimpleArray<>(new Integer[5]);
         integers.add(1);
