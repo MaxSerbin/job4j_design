@@ -11,6 +11,8 @@ public class ResultFile {
                 }
                 out.write(System.lineSeparator().getBytes());
             }
-        } catch (Exception e) { e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
