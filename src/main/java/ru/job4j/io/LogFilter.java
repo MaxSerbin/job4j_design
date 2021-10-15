@@ -10,8 +10,11 @@ public class LogFilter {
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = in.readLine()) != null) {
-                if (line.contains("404")) {
-                    result.add(line);
+                String[] lines = line.split(" ");
+                for (String s : lines) {
+                    if (Integer.parseInt(lines[lines.length - 2]) == 404) {
+                        result.add(s);
+                    }
                 }
             }
         } catch (Exception e) {
