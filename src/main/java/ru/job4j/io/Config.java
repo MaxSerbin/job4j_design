@@ -11,22 +11,23 @@ import java.util.StringJoiner;
 public class Config {
     private final String path;
     private final Map<String, String> values = new HashMap<>();
+    private String[] rsl;
 
     public Config(final String path) {
         this.path = path;
     }
 
-    public void load() {
+    public boolean chek() {
+        boolean result = false;
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             String orig;
-            String[] rsl;
             while ((orig = read.readLine()) != null) {
-                if (!orig.isEmpty() && (orig.charAt(0)) != '#') {
+                if (!orig.isEmpty() && (orig.charAt(0) != '#')) {
                     rsl = orig.split("=");
-                    if (rsl.length < 2) {
+                    result = true;
+                    if (rsl.length < 2 && !orig.contains("=")) {
                         throw new IllegalArgumentException();
                     }
-                    values.put(rsl[0], rsl[1]);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -34,6 +35,13 @@ public class Config {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return result;
+    }
+
+    public void load() {
+      if (chek()) {
+          values.put(rsl[0], rsl[1]);
+      }
     }
 
         public String value(String key) {
