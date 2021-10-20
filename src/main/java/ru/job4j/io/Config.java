@@ -26,7 +26,7 @@ public class Config {
                     rsl = orig.split("=");
                     result = true;
                     if (rsl.length < 2 && !orig.contains("=")) {
-                        throw new IllegalArgumentException();
+                        throw new IllegalArgumentException("Ошибка ! Нарушение шаблона ключ=значение.");
                     }
                 }
             }
