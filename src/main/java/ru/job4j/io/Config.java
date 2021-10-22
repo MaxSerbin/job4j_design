@@ -1,7 +1,6 @@
 package ru.job4j.io;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,13 +24,12 @@ public class Config {
                 if (!orig.isEmpty() && (orig.charAt(0) != '#')) {
                     rsl = orig.split("=");
                     result = true;
-                    if (rsl.length < 2 && !orig.contains("=")) {
+                    if (rsl.length != 2 || !orig.contains("=") || !orig.contains("-") || orig.contains("==")) {
+                        System.out.println("Ошибка ! Нарушение шаблона ключ=значение.");
                         throw new IllegalArgumentException("Ошибка ! Нарушение шаблона ключ=значение.");
                     }
                 }
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
