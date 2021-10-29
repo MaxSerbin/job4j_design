@@ -11,10 +11,10 @@ import java.util.List;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     private final HashSet<FileProperty> check = new HashSet<>();
-    private static final List<FileProperty> duplicates = new ArrayList<>();
+    private static final List<FileProperty> Duplicates = new ArrayList<>();
 
     public static void getDuplicates() {
-        for (FileProperty duplicate : duplicates) {
+        for (FileProperty duplicate : Duplicates) {
             System.out.println("Duplicate : " + duplicate);
         }
     }
@@ -25,7 +25,7 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
         if (!check.contains(fileProp)) {
              check.add(fileProp);
         } else {
-            duplicates.add(fileProp);
+            Duplicates.add(fileProp);
         }
         return super.visitFile(file, attrs);
     }
