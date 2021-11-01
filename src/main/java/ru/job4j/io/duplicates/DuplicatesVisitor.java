@@ -8,11 +8,11 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
-    private static final HashMap<FileProperty, List<Path>> map = new HashMap<>();
+    private static final HashMap<FileProperty, List<Path>> MAP = new HashMap<>();
 
     public static Map<FileProperty, List<Path>> getDuplicates() {
         Map<FileProperty, List<Path>> rsl = new HashMap<>();
-        for (Map.Entry<FileProperty, List<Path>> i : map.entrySet()) {
+        for (Map.Entry<FileProperty, List<Path>> i : MAP.entrySet()) {
             if (i.getValue().size() > 1) {
                 rsl.put(i.getKey(), i.getValue());
             }
@@ -23,10 +23,10 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty fileProp = new FileProperty(file.toFile().length(), file.toFile().getName());
-        if (!map.containsKey(fileProp)) {
-             map.put(fileProp, new ArrayList<>(List.of(file.toAbsolutePath())));
+        if (!MAP.containsKey(fileProp)) {
+             MAP.put(fileProp, new ArrayList<>(List.of(file.toAbsolutePath())));
         } else {
-             map.get(fileProp).add(file.toAbsolutePath());
+             MAP.get(fileProp).add(file.toAbsolutePath());
         }
         return super.visitFile(file, attrs);
     }
