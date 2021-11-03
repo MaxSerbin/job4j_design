@@ -13,11 +13,22 @@ public class Search {
         Files.walkFileTree(root, searcher);
         return searcher.getPaths();
     }
-    public static void main(String[] args) throws IOException {
+
+    public static boolean validation(String[] args) {
+        Path path = Path.of(args[0]);
         if (args.length < 2) {
             throw new IllegalArgumentException("Ошибка ! Укажите исходную папку и нужное расширение.");
         }
-        Path start = Paths.get(args[0]);
-        search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
+        if (!Files.exists(path) && !Files.isDirectory(path)) {
+            throw new IllegalArgumentException("Директория не существует или не является директорией.");
+        }
+        return false;
+    }
+
+    public static void main(String[] args) throws IOException {
+        if (!Search.validation(args)) {
+            Path start = Paths.get(args[0]);
+            search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
+        }
     }
 }
