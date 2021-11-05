@@ -16,7 +16,7 @@ public class ArgsName {
         }
         for (String i : args) {
             String[] rsl = i.split("=");
-            if (rsl.length < 2) {
+            if (rsl.length != 2 || rsl[0].isEmpty() || !rsl[0].startsWith("-")) {
                 throw new IllegalArgumentException("Ошибка ! Нарушение шаблона ключ=значение.");
             }
             values.put(rsl[0].substring(1), rsl[1]);

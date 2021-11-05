@@ -30,4 +30,27 @@ public class ArgsNameTest {
         ArgsName jvm = ArgsName.of(new String[] {"-encoding=UTF-8", "-Xmx="});
         jvm.get("Xmx");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenKeyNotExist() {
+        ArgsName jvm = ArgsName.of(new String[] {"=UTF-8", "-Xmx=512"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenWithoutHyphen() {
+        ArgsName jvm = ArgsName.of(new String[] {"Xmx=512", "-encoding=UTF-8"});
+        jvm.get("Xmx");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenWithoutEquals() {
+        ArgsName jvm = ArgsName.of(new String[] {"-Xmx512", "-encoding=UTF-8"});
+        jvm.get("Xmx");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenTwoEquals() {
+        ArgsName jvm = ArgsName.of(new String[] {"-Xmx==512", "-encoding=UTF-8"});
+        jvm.get("Xmx");
+    }
 }
