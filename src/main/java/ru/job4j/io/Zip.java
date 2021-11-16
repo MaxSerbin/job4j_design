@@ -23,8 +23,8 @@ public class Zip {
 
     public static void validation(String[] args) {
         if (args.length != 3) {
-            throw new IllegalArgumentException("Ошибка ! Укажите исходную папку , нужное расширение и" +
-                    "конечный файл.");
+            throw new IllegalArgumentException("Ошибка ! Укажите исходную папку , нужное расширение и"
+                   + "конечный файл.");
         }
         for (String s : args) {
             String[] rsl = s.split("=");
