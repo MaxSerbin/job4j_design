@@ -20,25 +20,33 @@ public class Zip {
         }
     }
 
-    public static void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(out.readAllBytes());
+
+    public static void validation(String[] args) {
+        if (args.length != 3) {
+            throw new IllegalArgumentException("Ошибка ! Укажите исходную папку , нужное расширение и" +
+                    "конечный файл.");
+        }
+        for (String s : args) {
+            String[] rsl = s.split("=");
+            if (rsl.length != 2 || rsl[0].isEmpty() || !rsl[0].startsWith("-")) {
+                throw new IllegalArgumentException("Ошибка ! Нарушение шаблона ключ=значение.");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            if ("-d".equals(rsl[0])) {
+                File file = new File(rsl[1]);
+                if (!file.exists() || !file.isDirectory()) {
+                    throw new IllegalArgumentException("Директория не существует или не является директорией.");
+                }
+            }
         }
     }
 
     public static void main(String[] args) throws IOException {
-        if (Search.validation(args)) {
-            ArgsName argsName = ArgsName.of(args);
-            Path dir = Path.of(argsName.get("d"));
-            String ex = argsName.get("e");
-            List<Path> list = Search.search(dir, p -> !p.toFile().getName().endsWith(ex));
-            File output = new File(argsName.get("o"));
-            packFiles(list, output);
-        }
+        validation(args);
+        ArgsName argsName = ArgsName.of(args);
+        Path dir = Path.of(argsName.get("d"));
+        String ex = argsName.get("e");
+        List<Path> list = Search.search(dir, p -> !p.toFile().getName().endsWith(ex));
+        File output = new File(argsName.get("o"));
+        packFiles(list, output);
     }
 }
