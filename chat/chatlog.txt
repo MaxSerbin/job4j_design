@@ -1,0 +1,13 @@
+
+User: eee
+Bot: Да
+User: fgg
+Bot: Возможно
+User: tnhn
+Bot: Возможно
+User: стоп
+User: продолжить
+Bot: Нет
+User: аыыва
+Bot: Возможно
+User: закончить
