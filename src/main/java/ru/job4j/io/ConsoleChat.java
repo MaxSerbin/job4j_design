@@ -28,13 +28,13 @@ public class ConsoleChat {
         do {
             question = scan.nextLine();
             log.add("User: " + question);
-            if (question.equals(OUT)) {
+            if (OUT.equals(question)) {
                 rsl = false;
             }
-            if (question.equals(STOP)) {
+            if (STOP.equals(question)) {
                 rsl = false;
             }
-            if (question.equals(CONTINUE)) {
+            if (CONTINUE.equals(question)) {
                 rsl = true;
             }
             if (rsl) {
@@ -42,7 +42,7 @@ public class ConsoleChat {
                 log.add("Bot: " + answer);
                 System.out.println(answer);
             }
-        } while (!question.equals(OUT));
+        } while (!OUT.equals(question));
                 saveLog(log);
     }
 
