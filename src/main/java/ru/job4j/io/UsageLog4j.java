@@ -16,7 +16,7 @@ public class UsageLog4j {
         float f = 3.14F;
         double g = 7.62;
         boolean h = true;
-        LOG.debug("Variable output example : a = {}, b = {}, c = {}, d = {}" , a, b, c, d);
-        LOG.debug("Variable output example : e = {}, f = {}, g = {}, h = {}" , e, f, g, h);
+        LOG.debug("Variable output example : a = {}, b = {}, c = {}, d = {}", a, b, c, d);
+        LOG.debug("Variable output example : e = {}, f = {}, g = {}, h = {}", e, f, g, h);
     }
 }
