@@ -19,7 +19,7 @@ public class VehicleXml {
     private LicensePlateXml lpt;
 
     @XmlElementWrapper
-    @XmlElement(name="misc")
+    @XmlElement(name = "misc")
     private String[] misc;
 
     public VehicleXml() {
