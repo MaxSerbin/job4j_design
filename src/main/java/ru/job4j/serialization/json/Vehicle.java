@@ -18,6 +18,26 @@ public class Vehicle {
         this.misc = misc;
     }
 
+    public boolean isDiesel() {
+        return diesel;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public LicensePlate getLpt() {
+        return lpt;
+    }
+
+    public String[] getMisc() {
+        return misc;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{"

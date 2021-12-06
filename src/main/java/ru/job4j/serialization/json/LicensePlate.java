@@ -7,6 +7,10 @@ public class LicensePlate {
         this.plate = plate;
     }
 
+    public String getPlate() {
+        return plate;
+    }
+
     @Override
     public String toString() {
         return "LicensePlate{"
