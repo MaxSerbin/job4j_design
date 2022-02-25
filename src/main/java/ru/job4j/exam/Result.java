@@ -19,46 +19,26 @@ public class Result {
         toFile();
     }
 
-    private Predicate<String> getPred() {
-        Predicate<String> predicate = null;
-        if (argsNm.get("t").equals("name")) {
-            String name = nameBuilder(argsNm.get("n"));
+    private Predicate<Path> getPred() {
+        Predicate<Path> predicate = null;
+        var name = argsNm.get("n");
+        var type = argsNm.get("t");
+        if ("name".equals(type)) {
+            predicate = p -> p.toFile().getName().equals(name);
+        } else if ("mask".equals(type)) {
+            var change = name.replaceAll("\\*", ".\\*")
+                    .replaceAll("\\?", ".\\?")
+                    .replaceAll("\\.", ".\\.");
+            Pattern pattern = Pattern.compile(change);
+            predicate = p -> pattern.matcher(p.toFile().getName()).matches();
+        } else if ("regex".equals(type)) {
             Pattern pattern = Pattern.compile(name);
-            predicate = pattern.asPredicate();
-        } else if (argsNm.get("t").equals("mask")) {
-            String mask = argsNm.get("n");
-            String[] s = mask.split("\\*");
-            String rsl = s[0];
-            Pattern pattern = Pattern.compile(rsl);
-            predicate = pattern.asPredicate();
-        } else if (argsNm.get("t").equals("regex")) {
-                String reg = getRegex(argsNm.get("n"));
-                Pattern pattern = Pattern.compile(reg);
-                predicate = pattern.asPredicate();
+            predicate = p -> pattern.matcher(p.toFile().getName()).matches();
         }
         return predicate;
     }
 
-    private static String nameBuilder(String str) {
-        return "^" + str + ".[a-z]+";
-    }
-
-    private static String getRegex(String mask) {
-        var builder = new StringBuilder();
-        for (int i = 0; i < mask.length(); i++) {
-            char symbol = mask.charAt(i);
-            if (symbol == '*') {
-                builder.append(".*");
-            } else if (symbol == '.') {
-                builder.append("\\.");
-            } else {
-                builder.append(symbol);
-            }
-        }
-        return builder.toString();
-    }
-
-    private List<Path> searcher(Path root, Predicate<String> condition) throws IOException {
+    private List<Path> searcher(Path root, Predicate<Path> condition) throws IOException {
         this.searchFile = new SearchFile(getPred());
         var x = argsNm.get("d");
         Files.walkFileTree(Path.of(x), searchFile);
@@ -70,7 +50,7 @@ public class Result {
     }
 
     public static void main(String[] args) throws IOException {
-        args = new String[]{"-d=c:/", "-n=.txt", "-t=mask", "-o=log.txt"};
+        args = new String[]{"-d=c:/", "-n=*.txt", "-t=mask", "-o=log.txt"};
         new Result(args);
     }
 }
