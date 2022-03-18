@@ -30,8 +30,11 @@ select * from emploers e cross join departments d;
 select * from departments d left join emploers e on e.dept_id = d.id
 where dept_id is null;
 
-select * from emploers e left join departments d on e.dept_id = d.id;
-select * from departments d right join emploers e on e.dept_id = d.id;
+select e.e_name, e.dept_id, d.d_name
+from emploers e left join departments d on e.dept_id = d.id;
+
+select e.e_name, e.dept_id, d.d_name
+from departments d right join emploers e on e.dept_id = d.id;
 
 create table teens (
 id serial primary key,
