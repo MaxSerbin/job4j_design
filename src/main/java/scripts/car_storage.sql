@@ -39,14 +39,15 @@ insert into gear_box(gb_name) values ('sequential');
 insert into car(c_name, body_id, engine_id, gb_id) values ('Challenger', 1, 1, 1);
 insert into car(c_name, body_id, engine_id, gb_id) values ('Lancer EVO', 2, 2, 2);
 insert into car(c_name, body_id, engine_id, gb_id) values ('Audi Q5', 3, 3, 3);
+insert into car(c_name, body_id, engine_id, gb_id) values ('Scania P420', null , null , null);
 
 select c.c_name as Модель, b.b_name as Кузов, e.e_name as Двигатель, g.gb_name as КПП
 from car as c
-join body as b
+left join body as b
 on c.body_id = b.id
-join engine as e
+left join engine as e
 on c.engine_id = e.id
-join gear_box as g
+left join gear_box as g
 on c.gb_id = g.id;
 
 select b.b_name as Кузов
