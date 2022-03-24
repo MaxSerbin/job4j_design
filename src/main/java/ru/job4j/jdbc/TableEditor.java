@@ -1,6 +1,7 @@
 package ru.job4j.jdbc;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 import java.util.StringJoiner;
@@ -15,13 +16,18 @@ public class TableEditor implements AutoCloseable {
     }
 
     private void initConnection() throws Exception {
-        try (FileInputStream f = new FileInputStream("./data/table_editor.properties")) {
-            properties.load(f);
             Class.forName(properties.getProperty("driver"));
             connection = DriverManager
                     .getConnection(properties.getProperty("url"), properties.getProperty("login"),
                             properties.getProperty("password"));
-        }
+
+ //       try (FileInputStream f = new FileInputStream("./data/table_editor.properties")) {
+//            properties.load(f);
+//            Class.forName(properties.getProperty("driver"));
+//            connection = DriverManager
+//                    .getConnection(properties.getProperty("url"), properties.getProperty("login"),
+//                            properties.getProperty("password"));
+//        }
     }
 
     private void doIt(String script) throws SQLException {
@@ -85,7 +91,12 @@ public class TableEditor implements AutoCloseable {
     }
 
     public static void main(String[] args) throws Exception {
-        TableEditor tbe = new TableEditor(new Properties());
+        Properties config = new Properties();
+        try (InputStream is = TableEditor.class.getClassLoader().
+                getResourceAsStream("table_editor.properties")) {
+            config.load(is);
+        }
+        TableEditor tbe = new TableEditor(config);
         tbe.createTable("car");
         System.out.println(getTableScheme(tbe.connection, "car"));
         tbe.addColumn("car", "model", "varchar(255)");
