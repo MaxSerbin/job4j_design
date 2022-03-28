@@ -87,16 +87,17 @@ public class TableEditor implements AutoCloseable {
                 getResourceAsStream("table_editor.properties")) {
             config.load(is);
         }
-        TableEditor tbe = new TableEditor(config);
-        tbe.createTable("car");
-        System.out.println(getTableScheme(tbe.connection, "car"));
-        tbe.addColumn("car", "model", "varchar(255)");
-        tbe.addColumn("car", "ear", "int");
-        System.out.println(getTableScheme(tbe.connection, "car"));
-        tbe.renameColumn("car", "ear", "year");
-        System.out.println(getTableScheme(tbe.connection, "car"));
-        tbe.dropColumn("car", "year");
-        System.out.println(getTableScheme(tbe.connection, "car"));
-        tbe.dropTable("car");
+        try (TableEditor tbe = new TableEditor(config)) {
+            tbe.createTable("car");
+            System.out.println(getTableScheme(tbe.connection, "car"));
+            tbe.addColumn("car", "model", "varchar(255)");
+            tbe.addColumn("car", "ear", "int");
+            System.out.println(getTableScheme(tbe.connection, "car"));
+            tbe.renameColumn("car", "ear", "year");
+            System.out.println(getTableScheme(tbe.connection, "car"));
+            tbe.dropColumn("car", "year");
+            System.out.println(getTableScheme(tbe.connection, "car"));
+            tbe.dropTable("car");
+        }
     }
 }
