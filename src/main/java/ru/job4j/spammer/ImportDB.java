@@ -39,7 +39,7 @@ public class ImportDB {
             for (User user : users) {
                 try (PreparedStatement ps = cnt.prepareStatement(
                         "insert into users(u_name, email) values (?, ?)")) {
-                    ps.setString(1, user.u_name);
+                    ps.setString(1, user.uname);
                     ps.setString(2, user.email);
                     ps.execute();
                 }
@@ -48,11 +48,11 @@ public class ImportDB {
     }
 
     private static class User {
-        String u_name;
+        String uname;
         String email;
 
         public User(String name, String email) {
-            this.u_name = name;
+            this.uname = name;
             this.email = email;
         }
     }
