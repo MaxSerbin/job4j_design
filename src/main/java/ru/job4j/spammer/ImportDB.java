@@ -18,13 +18,18 @@ public class ImportDB {
         this.dump = dump;
     }
 
-    public List<User> load() throws IOException {
+    public List<User> load() {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
              rd.lines().forEach(l -> {
                  String[] data = l.split(";");
+                 if (data.length != 2 || data[0].isEmpty() || data[1].isEmpty()) {
+                     throw new IllegalArgumentException();
+                 }
                  users.add(new User(data[0], data[1]));
              });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return users;
     }
@@ -58,13 +63,13 @@ public class ImportDB {
     }
 
     public static void main(String[] args) throws Exception {
-        Properties cfg = new Properties();
-        try (FileInputStream in = new FileInputStream(
-                "C:\\projects\\job4j_design\\src\\main\\java\\ru\\job4j\\spammer\\spam.properties")) {
-            cfg.load(in);
+        Properties config = new Properties();
+        try (InputStream is = ImportDB.class.getClassLoader().
+                getResourceAsStream("spam.properties")) {
+            config.load(is);
         }
         ImportDB db = new ImportDB(
-                cfg, "C:\\projects\\job4j_design\\src\\main\\java\\ru\\job4j\\spammer\\dump.txt");
+                config, "./data/dump.txt");
         db.save(db.load());
     }
 }
